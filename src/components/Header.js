@@ -11,7 +11,7 @@ class Header extends Component {
           <div className="navbar__button-line"></div>
         </div>
         <div className="navbar__inner">
-          <Link to='/' className="navbar__logo">sassbox</Link>
+          <Link to='/' className="navbar__logo">redact</Link>
           <div className="navbar__collapse" id="navbarCollapse">
             <ul className="nav">
               <li>
