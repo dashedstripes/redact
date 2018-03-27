@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { setFilter } from '../actions/filterActions'
 import { createTodo, todoCompleted } from '../actions/todoActions'
 
 class TodoList extends Component {
@@ -31,6 +32,10 @@ class TodoList extends Component {
     this.props.dispatch(todoCompleted(index))
   }
 
+  setFilter(filter, e) {
+    this.props.dispatch(setFilter(filter))
+  }
+
   render() {
     const todolis = this.props.todos.map((todo) => {
       return (
@@ -42,6 +47,8 @@ class TodoList extends Component {
 
     return (
       <div>
+        <button className='button tertiary' onClick={this.setFilter.bind(this, 'ALL')}> Show all</button>
+        <button className='button tertiary' onClick={this.setFilter.bind(this, 'COMPLETED')}> Show completed</button>
         <ul className='p-l-1'>
           {todolis}
         </ul>

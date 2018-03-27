@@ -2,12 +2,14 @@ const defaultState = [
   {
     id: 1,
     title: 'Buy Butter',
-    completed: false
+    completed: false,
+    visible: true
   },
   {
     id: 2,
     title: 'Pick up laundry',
-    completed: false
+    completed: false,
+    visible: true
   }
 ]
 
@@ -20,6 +22,7 @@ function reducer(state = defaultState, action) {
       return [...state].map((todo) => {
         if (todo.id === action.payload) {
           todo.completed = !todo.completed
+          todo.visible = !todo.visible
         }
         return todo
       })

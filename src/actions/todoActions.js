@@ -4,7 +4,8 @@ export function createTodo(title) {
     payload: {
       id: Date.now(),
       title,
-      completed: false
+      completed: false,
+      visible: true
     }
   }
 }
