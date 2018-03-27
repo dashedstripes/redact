@@ -9,7 +9,24 @@ class TodoList extends Component {
     super()
 
     this.state = {
-      input: ''
+      input: '',
+      filters: [
+        {
+          id: 1,
+          active: true,
+          type: 'ALL'
+        },
+        {
+          id: 2,
+          active: false,
+          type: 'INCOMPLETE'
+        },
+        {
+          id: 3,
+          active: false,
+          type: 'COMPLETED'
+        }
+      ]
     }
   }
 
@@ -32,23 +49,64 @@ class TodoList extends Component {
     this.props.dispatch(todoCompleted(index))
   }
 
-  setFilter(filter, e) {
+  setFilter(filter, id, e) {
+    e.preventDefault()
     this.props.dispatch(setFilter(filter))
+
+    this.setState({
+      filters: this.state.filters.map((filter) => {
+        if (filter.id === id) {
+          filter.active = true
+        } else {
+          filter.active = false
+        }
+        return filter
+      })
+    })
   }
 
   render() {
     const todolis = this.props.todos.map((todo) => {
-      return (
-        <li key={todo.id} onClick={this.markCompletedTodo.bind(this, todo.id)}>
-          {todo.completed ? <strike>{todo.title}</strike> : todo.title}
-        </li>
-      )
+      if (this.props.filter === 'ALL') {
+        return (
+          <li key={todo.id} onClick={this.markCompletedTodo.bind(this, todo.id)}>
+            {todo.completed ? <strike>{todo.title}</strike> : todo.title}
+          </li>
+        )
+      } else if (this.props.filter === 'COMPLETED') {
+        if (todo.completed) {
+          return (
+            <li key={todo.id} onClick={this.markCompletedTodo.bind(this, todo.id)}>
+              <strike>{todo.title}</strike>
+            </li>
+          )
+        }
+      } else if (this.props.filter === 'INCOMPLETE') {
+        if (!todo.completed) {
+          return (
+            <li key={todo.id} onClick={this.markCompletedTodo.bind(this, todo.id)}>
+              {todo.title}
+            </li>
+          )
+        }
+      }
+    })
+
+    const filters = this.state.filters.map((filter) => {
+      if (filter.active) {
+        return (
+          <a key={filter.id} className='m-r-1 t-b' onClick={this.setFilter.bind(this, filter.type, filter.id)}>{filter.type}</a>
+        )
+      } else {
+        return (
+          <a key={filter.id} className='m-r-1' onClick={this.setFilter.bind(this, filter.type, filter.id)}>{filter.type}</a>
+        )
+      }
     })
 
     return (
       <div>
-        <button className='button tertiary' onClick={this.setFilter.bind(this, 'ALL')}> Show all</button>
-        <button className='button tertiary' onClick={this.setFilter.bind(this, 'COMPLETED')}> Show completed</button>
+        {filters}
         <ul className='p-l-1'>
           {todolis}
         </ul>
@@ -65,6 +123,7 @@ class TodoList extends Component {
 
 function mapStateToProps(state) {
   return {
+    filter: state.filter,
     todos: state.todos
   }
 }
