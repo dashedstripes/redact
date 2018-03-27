@@ -7,22 +7,18 @@ class Home extends Component {
     this.items = [
       {
         title: 'ReactJS',
-        description: 'Start a new ReactJS project Quickly',
         color: 'blue'
       },
       {
         title: 'Redux',
-        description: 'Best practice structured redux/react app',
         color: 'red'
       },
       {
         title: 'React Router',
-        description: 'Best practice structured redux/react app',
         color: 'green'
       },
       {
-        title: 'SASS',
-        description: 'Best practice structured redux/react app',
+        title: 'Sassbox',
         color: 'yellow'
       }
     ]
